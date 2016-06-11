@@ -33,5 +33,13 @@ public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
             viewRef.clear();
             viewRef = null;
         }
+
+        if (!retainInstance) {
+            unsubscribe();
+        }
+    }
+
+    protected void unsubscribe() {
+
     }
 }

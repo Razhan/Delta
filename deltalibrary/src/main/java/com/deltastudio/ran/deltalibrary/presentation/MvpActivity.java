@@ -20,12 +20,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
+import com.deltastudio.ran.deltalibrary.domain.exception.ErrorMessageFactory;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegate;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegateCallback;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegateImpl;
 import com.deltastudio.ran.deltalibrarycommon.MvpPresenter;
 import com.deltastudio.ran.deltalibrarycommon.MvpView;
-
 
 public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
         extends AppCompatActivity implements ActivityMvpDelegateCallback<V, P>, MvpView {
@@ -33,6 +33,7 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     protected ActivityMvpDelegate mvpDelegate;
     protected P presenter;
     protected boolean retainInstance;
+    protected ErrorMessageFactory errorMessageFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,5 +152,9 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     @Override
     public final Object getLastConfigurationInstance() {
         return getMvpDelegate().getConfigurationInstance();
+    }
+
+    public String getErrorMessage(Exception error) {
+        return errorMessageFactory.create(this, error);
     }
 }

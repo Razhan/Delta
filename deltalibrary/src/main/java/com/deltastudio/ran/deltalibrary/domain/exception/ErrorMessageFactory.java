@@ -4,6 +4,6 @@ import android.content.Context;
 
 public interface ErrorMessageFactory {
 
-  String create(Context context, Exception exception);
+    String create(Context context, Exception exception);
 
 }
