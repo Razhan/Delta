@@ -6,9 +6,9 @@ import com.deltastudio.ran.deltalibrarycommon.MvpView;
 public interface ActivityMvpDelegateCallback<V extends MvpView, P extends MvpPresenter<V>>
         extends MvpDelegateCallback<V, P> {
 
-    Object onRetainConfigurationInstance();
+    Object saveExtraInstance();
 
     Object getLastCustomNonConfigurationInstance();
 
-    Object getLastConfigurationInstance();
+    Object getExtraInstance();
 }

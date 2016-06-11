@@ -82,8 +82,7 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V
     public Object onRetainCustomNonConfigurationInstance() {
 
         P presenter = delegateCallback.shouldInstanceBeRetained() ? delegateCallback.getPresenter() : null;
-        Object configurationInstance =
-                delegateCallback.onRetainConfigurationInstance();
+        Object configurationInstance = delegateCallback.saveExtraInstance();
 
         if (presenter == null && configurationInstance == null) {
             return null;
@@ -93,7 +92,7 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V
     }
 
     @Override
-    public Object getConfigurationInstance() {
+    public Object getExtraInstance() {
         ActivityMvpNonConfigurationInstances last =
                 (ActivityMvpNonConfigurationInstances) delegateCallback.getLastCustomNonConfigurationInstance();
         return last == null ? null : last.configurationInstance;

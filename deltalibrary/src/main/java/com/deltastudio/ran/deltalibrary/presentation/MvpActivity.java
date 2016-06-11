@@ -140,8 +140,13 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     }
 
     @Override
-    public Object onRetainConfigurationInstance() {
+    public Object saveExtraInstance() {
         return null;
+    }
+
+    @Override
+    public final Object getExtraInstance() {
+        return getMvpDelegate().getExtraInstance();
     }
 
     @Override
@@ -150,8 +155,8 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     }
 
     @Override
-    public final Object getLastConfigurationInstance() {
-        return getMvpDelegate().getConfigurationInstance();
+    public Object getLastCustomNonConfigurationInstance() {
+        return super.getLastCustomNonConfigurationInstance();
     }
 
     public String getErrorMessage(Exception error) {

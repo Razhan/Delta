@@ -29,5 +29,5 @@ public interface ActivityMvpDelegate<V extends MvpView, P extends MvpPresenter<V
 
     Object onRetainCustomNonConfigurationInstance();
 
-    Object getConfigurationInstance();
+    Object getExtraInstance();
 }
