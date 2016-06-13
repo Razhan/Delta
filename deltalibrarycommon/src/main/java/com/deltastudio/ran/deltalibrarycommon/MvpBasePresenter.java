@@ -5,7 +5,7 @@ import android.support.annotation.UiThread;
 
 import java.lang.ref.WeakReference;
 
-public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
+public abstract class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     private WeakReference<V> viewRef;
 
@@ -39,7 +39,5 @@ public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
         }
     }
 
-    protected void unsubscribe() {
-
-    }
+    protected abstract void unsubscribe();
 }
