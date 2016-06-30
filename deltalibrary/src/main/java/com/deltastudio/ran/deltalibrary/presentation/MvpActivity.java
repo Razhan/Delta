@@ -8,8 +8,7 @@ import com.deltastudio.ran.deltalibrary.domain.exception.ErrorMessageFactory;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegate;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegateCallback;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegateImpl;
-import com.deltastudio.ran.deltalibrarycommon.MvpPresenter;
-import com.deltastudio.ran.deltalibrarycommon.MvpView;
+import com.deltastudio.ran.deltalibrary.view.MvpView;
 
 public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
         extends AppCompatActivity implements ActivityMvpDelegateCallback<V, P>, MvpView {
@@ -123,7 +122,7 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     }
 
     @Override
-    public Object saveExtraInstance() {
+    public Object setExtraInstance() {
         return null;
     }
 
@@ -133,12 +132,17 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     }
 
     @Override
-    public final Object onRetainCustomNonConfigurationInstance() {
-        return getMvpDelegate().onRetainCustomNonConfigurationInstance();
+    public Object onRetainCustomNonConfigurationInstance() {
+        return setAllInstance();
     }
 
     @Override
-    public Object getLastCustomNonConfigurationInstance() {
+    public Object setAllInstance() {
+        return getMvpDelegate().setAllInstance();
+    }
+
+    @Override
+    public Object getAllInstance() {
         return super.getLastCustomNonConfigurationInstance();
     }
 

@@ -1,1 +1,1 @@
-include ':app', ':deltalibrary', ':deltalibrarycommon'
+include ':app', ':deltalibrary'

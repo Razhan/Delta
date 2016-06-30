@@ -2,8 +2,8 @@ package com.deltastudio.ran.deltalibrary.presentation.delegate;
 
 import android.support.annotation.NonNull;
 
-import com.deltastudio.ran.deltalibrarycommon.MvpPresenter;
-import com.deltastudio.ran.deltalibrarycommon.MvpView;
+import com.deltastudio.ran.deltalibrary.presentation.MvpPresenter;
+import com.deltastudio.ran.deltalibrary.view.MvpView;
 
 public interface MvpDelegateCallback<V extends MvpView, P extends MvpPresenter<V>> {
 

@@ -11,8 +11,7 @@ import android.view.View;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.FragmentMvpDelegate;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.FragmentMvpDelegateImpl;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.MvpDelegateCallback;
-import com.deltastudio.ran.deltalibrarycommon.MvpPresenter;
-import com.deltastudio.ran.deltalibrarycommon.MvpView;
+import com.deltastudio.ran.deltalibrary.view.MvpView;
 
 public abstract class MvpFragment<V extends MvpView, P extends MvpPresenter<V>> extends Fragment
         implements MvpDelegateCallback<V, P>, MvpView {

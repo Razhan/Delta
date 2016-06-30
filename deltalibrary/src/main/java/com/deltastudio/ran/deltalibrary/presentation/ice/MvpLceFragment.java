@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import com.deltastudio.ran.deltalibrary.R;
 import com.deltastudio.ran.deltalibrary.presentation.MvpFragment;
-import com.deltastudio.ran.deltalibrarycommon.MvpLceView;
-import com.deltastudio.ran.deltalibrarycommon.MvpPresenter;
+import com.deltastudio.ran.deltalibrary.presentation.MvpPresenter;
 
 public abstract class MvpLceFragment<CV extends View, M, V extends MvpLceView<M>, P extends MvpPresenter<V>>
         extends MvpFragment<V, P> implements MvpLceView<M> {

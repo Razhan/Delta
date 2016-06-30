@@ -2,8 +2,8 @@ package com.deltastudio.ran.deltalibrary.presentation.delegate;
 
 import android.os.Bundle;
 
-import com.deltastudio.ran.deltalibrarycommon.MvpPresenter;
-import com.deltastudio.ran.deltalibrarycommon.MvpView;
+import com.deltastudio.ran.deltalibrary.presentation.MvpPresenter;
+import com.deltastudio.ran.deltalibrary.view.MvpView;
 
 public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V>>
         implements ActivityMvpDelegate {
@@ -30,7 +30,7 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V
     public void onCreate(Bundle bundle) {
 
         ActivityMvpNonConfigurationInstances<V, P> nci =
-                (ActivityMvpNonConfigurationInstances<V, P>) delegateCallback.getLastCustomNonConfigurationInstance();
+                (ActivityMvpNonConfigurationInstances<V, P>) delegateCallback.getAllInstance();
 
         if (nci != null && nci.presenter != null) {
             delegateCallback.setPresenter(nci.presenter);
@@ -79,10 +79,9 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V
     }
 
     @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-
+    public Object setAllInstance() {
         P presenter = delegateCallback.shouldInstanceBeRetained() ? delegateCallback.getPresenter() : null;
-        Object configurationInstance = delegateCallback.saveExtraInstance();
+        Object configurationInstance = delegateCallback.setExtraInstance();
 
         if (presenter == null && configurationInstance == null) {
             return null;
@@ -94,7 +93,7 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V
     @Override
     public Object getExtraInstance() {
         ActivityMvpNonConfigurationInstances last =
-                (ActivityMvpNonConfigurationInstances) delegateCallback.getLastCustomNonConfigurationInstance();
+                (ActivityMvpNonConfigurationInstances) delegateCallback.getAllInstance();
         return last == null ? null : last.configurationInstance;
     }
 }

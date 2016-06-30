@@ -1,6 +1,6 @@
 package com.deltastudio.ran.deltalibrary.domain.usecase;
 
-import com.deltastudio.ran.deltalibrary.domain.annotation.UseCase;
+import com.deltastudio.ran.deltalibrary.domain.annotation.UseCaseMethod;
 import com.deltastudio.ran.deltalibrary.utils.ClassUtils;
 
 import java.lang.annotation.Annotation;
@@ -15,25 +15,25 @@ final class UseCaseFilter {
         List<Method> methodsFiltered = getAnnotatedUseCaseMethods(useCase);
         if (methodsFiltered.isEmpty()) {
             throw new IllegalArgumentException("This object doesn't contain any use case to execute."
-                    + "Did you forget to add the @UseCase annotation?");
+                    + "Did you forget to add the @UseCaseMethod annotation?");
         }
 
         methodsFiltered = getMethodMatchingName(useCaseName, methodsFiltered);
         if (methodsFiltered.isEmpty()) {
             throw new IllegalArgumentException("The target doesn't contain any use case with this name."
-                    + "Did you forget to add the @UseCase annotation?");
+                    + "Did you forget to add the @UseCaseMethod annotation?");
         }
 
         methodsFiltered = getMethodMatchingArguments(args, methodsFiltered);
         if (methodsFiltered.isEmpty()) {
             throw new IllegalArgumentException("The target doesn't contain any use case with those args. "
-                    + "Did you forget to add the @UseCase annotation?");
+                    + "Did you forget to add the @UseCaseMethod annotation?");
         }
 
         if (methodsFiltered.size() > 1) {
             throw new IllegalArgumentException(
                     "The target contains more than one use case with the same signature. "
-                            + "You can use the 'name' property in @UseCase and invoke it with a param name");
+                            + "You can use the 'name' property in @UseCaseMethod and invoke it with a param name");
         }
 
         return methodsFiltered.get(0);
@@ -73,9 +73,9 @@ final class UseCaseFilter {
 
         Method[] methods = target.getClass().getMethods();
         for (Method method : methods) {
-            UseCase useCaseMethod = method.getAnnotation(UseCase.class);
+            UseCaseMethod useCaseMethodMethod = method.getAnnotation(UseCaseMethod.class);
 
-            if (useCaseMethod != null) {
+            if (useCaseMethodMethod != null) {
                 useCaseMethods.add(method);
             }
         }
@@ -137,7 +137,7 @@ final class UseCaseFilter {
         Iterator<Method> iteratorMethods = methodsFiltered.iterator();
         while (iteratorMethods.hasNext()) {
             Method method = iteratorMethods.next();
-            UseCase annotation = method.getAnnotation(UseCase.class);
+            UseCaseMethod annotation = method.getAnnotation(UseCaseMethod.class);
             if (!(annotation.name().equals(nameUseCase))) {
                 iteratorMethods.remove();
             }

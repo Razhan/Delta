@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/Delta.iml" filepath="$PROJECT_DIR$/Delta.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/deltalibrary/deltalibrary.iml" filepath="$PROJECT_DIR$/deltalibrary/deltalibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/deltalibrarycommon/deltalibrarycommon.iml" filepath="$PROJECT_DIR$/deltalibrarycommon/deltalibrarycommon.iml" />
     </modules>
   </component>
 </project>
