@@ -16,7 +16,7 @@ import rx.Observable;
 /**
  * Created by ranzh on 6/30/2016.
  */
-public class NewsListUseCase extends UseCase {
+public class NewsListUseCase extends UseCase<News> {
 
     private NewsRepository newsRepository;
 

@@ -10,8 +10,6 @@ import com.deltastudio.ran.deltalibrary.presentation.MvpBasePresenter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import rx.functions.Action1;
-
 /**
  * Created by ranzh on 6/30/2016.
  */
@@ -26,12 +24,13 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
     }
 
     public void getNews() {
-        getNews.useCaseName("getNews")
-                .onSuccess(news -> {
-                    ((News)news).getCount();})
-                .onError(e -> {
-                    ((Throwable) e).printStackTrace();})
-                .execute();
+        getNews.builder()
+            .useCaseFunction("getNews")
+            .onSuccess(news -> {
+                ((News)news).getCount();})
+            .onError(e -> {
+                ((Throwable) e).printStackTrace();})
+            .build();
     }
 
     @Override

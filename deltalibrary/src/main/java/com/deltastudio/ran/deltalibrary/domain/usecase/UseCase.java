@@ -1,25 +1,25 @@
 package com.deltastudio.ran.deltalibrary.domain.usecase;
 
-import com.deltastudio.ran.deltalibrary.domain.usecase.callback.OnCompleteCallback;
-import com.deltastudio.ran.deltalibrary.domain.usecase.callback.OnErrorCallback;
-import com.deltastudio.ran.deltalibrary.domain.usecase.callback.OnSuccessCallback;
-
 import java.lang.reflect.Method;
 
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Actions;
+import rx.internal.util.InternalObservableUtils;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public abstract class UseCase {
+public abstract class UseCase<T> {
 
     private String methodName;
     private Object[] methodArgs;
 
-    private OnSuccessCallback onSuccessCallback;
-    private OnErrorCallback onErrorCallback;
-    private OnCompleteCallback onCompleteCallback;
+    private Action1<T> onSuccessCallback;
+    private Action1<Throwable> onErrorCallback;
+    private Action0 onCompleteCallback;
 
     private CompositeSubscription compositeSubscription;
 
@@ -31,71 +31,26 @@ public abstract class UseCase {
     private void reset() {
         methodArgs = null;
         methodName = null;
-        onSuccessCallback = null;
-        onErrorCallback = null;
-        onCompleteCallback = null;
+        onSuccessCallback = Actions.empty();
+        onErrorCallback = InternalObservableUtils.ERROR_NOT_IMPLEMENTED;
+        onCompleteCallback = Actions.empty();
     }
 
-    public UseCase useCaseName(String name) {
-        methodName = name;
-        return this;
-    }
-
-    public UseCase args(Object... args) {
-        this.methodArgs = args;
-        return this;
-    }
-
-    public UseCase onSuccess(OnSuccessCallback onSuccessCallback) {
-        if (onSuccessCallback == null) {
-            throw new IllegalArgumentException(
-                    "OnSuccessCallback is null. You can not invoke it with" + " null callback.");
-        }
-
-        this.onSuccessCallback = onSuccessCallback;
-        return this;
-    }
-
-    public UseCase onComplete(OnCompleteCallback onCompleteCallback) {
-        this.onCompleteCallback = onCompleteCallback;
-        return this;
-    }
-
-    public UseCase onError(OnErrorCallback errorCallback) {
-        this.onErrorCallback = errorCallback;
-        return this;
-    }
-
-    protected Observable buildUseCaseObservable() {
+    @SuppressWarnings("unchecked")
+    protected Observable<T> buildUseCaseObservable() {
         Method methodToInvoke = UseCaseFilter.filter(this, methodName, methodArgs);
-
         try {
-            return (Observable) methodToInvoke.invoke(this, methodArgs);
+            return (Observable<T>) methodToInvoke.invoke(this, methodArgs);
         } catch (Exception e) {
             return Observable.empty();
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void execute() {
-        if (onSuccessCallback == null) {
-            throw new IllegalArgumentException(
-                    "OnSuccessCallback is null. You can not invoke it with" + " null callback.");
-        }
-
-        Subscription subscription;
-
-        Observable observable = this.buildUseCaseObservable()
+        Subscription subscription = this.buildUseCaseObservable()
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
-
-        if (onErrorCallback == null) {
-            subscription = observable.subscribe(onSuccessCallback);
-        } else if (onCompleteCallback == null) {
-            subscription = observable.subscribe(onSuccessCallback, onErrorCallback);
-        } else {
-            subscription = observable.subscribe(onSuccessCallback, onErrorCallback, onCompleteCallback);
-        }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(onSuccessCallback, onErrorCallback, onCompleteCallback);
 
         compositeSubscription.add(subscription);
     }
@@ -104,6 +59,51 @@ public abstract class UseCase {
         if (!compositeSubscription.isUnsubscribed()) {
             compositeSubscription.unsubscribe();
         }
+    }
+
+    public Builder builder() {
+        return new Builder();
+    }
+
+    public final class Builder {
+        private Builder() {
+            reset();
+        }
+
+        public Builder useCaseFunction(String name) {
+            methodName = name;
+            return this;
+        }
+
+        public Builder useCaseArgs(Object... args) {
+            methodArgs = args;
+            return this;
+        }
+
+        public Builder onSuccess(Action1<T> successCallback) {
+            if (successCallback == null) {
+                throw new IllegalArgumentException(
+                        "OnSuccessCallback is null. You can not invoke it with" + " null callback.");
+            }
+
+            UseCase.this.onSuccessCallback = successCallback;
+            return this;
+        }
+
+        public Builder onComplete(Action0 completeCallback) {
+            UseCase.this.onCompleteCallback = completeCallback;
+            return this;
+        }
+
+        public Builder onError(Action1<Throwable> errorCallback) {
+            UseCase.this.onErrorCallback = errorCallback;
+            return this;
+        }
+
+        public void build () {
+            execute();
+        }
+
     }
 
 }
