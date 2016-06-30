@@ -25,10 +25,15 @@ public abstract class UseCase {
 
     public UseCase() {
         compositeSubscription = new CompositeSubscription();
+        reset();
+    }
 
-        onSuccessCallback = obj -> {};
-        onErrorCallback = obj -> {};
-        onCompleteCallback = () -> {};
+    private void reset() {
+        methodArgs = null;
+        methodName = null;
+        onSuccessCallback = null;
+        onErrorCallback = null;
+        onCompleteCallback = null;
     }
 
     public UseCase useCaseName(String name) {
@@ -52,21 +57,11 @@ public abstract class UseCase {
     }
 
     public UseCase onComplete(OnCompleteCallback onCompleteCallback) {
-//        if (onCompleteCallback == null) {
-//            throw new IllegalArgumentException(
-//                    "OnSuccessCallback is null. You can not invoke it with" + " null callback.");
-//        }
-
         this.onCompleteCallback = onCompleteCallback;
         return this;
     }
 
     public UseCase onError(OnErrorCallback errorCallback) {
-//        if (errorCallback == null) {
-//            throw new IllegalArgumentException(
-//                    "The onErrorCallback used is null, you can't use a null instance as onError callback.");
-//        }
-
         this.onErrorCallback = errorCallback;
         return this;
     }
@@ -83,10 +78,24 @@ public abstract class UseCase {
 
     @SuppressWarnings("unchecked")
     public void execute() {
-        Subscription subscription = this.buildUseCaseObservable()
+        if (onSuccessCallback == null) {
+            throw new IllegalArgumentException(
+                    "OnSuccessCallback is null. You can not invoke it with" + " null callback.");
+        }
+
+        Subscription subscription;
+
+        Observable observable = this.buildUseCaseObservable()
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(onSuccessCallback, onErrorCallback, onCompleteCallback);
+                .observeOn(AndroidSchedulers.mainThread());
+
+        if (onErrorCallback == null) {
+            subscription = observable.subscribe(onSuccessCallback);
+        } else if (onCompleteCallback == null) {
+            subscription = observable.subscribe(onSuccessCallback, onErrorCallback);
+        } else {
+            subscription = observable.subscribe(onSuccessCallback, onErrorCallback, onCompleteCallback);
+        }
 
         compositeSubscription.add(subscription);
     }
