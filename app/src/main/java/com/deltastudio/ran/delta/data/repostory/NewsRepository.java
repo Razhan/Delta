@@ -16,10 +16,9 @@ public class NewsRepository implements Repository {
         restfulService = service;
     }
 
-
-
-
-
+    public RestfulService getRestfulService() {
+        return restfulService;
+    }
 
 
 }

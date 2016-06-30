@@ -16,12 +16,16 @@ final class UseCaseFilter {
         if (methodsFiltered.isEmpty()) {
             throw new IllegalArgumentException("This object doesn't contain any use case to execute."
                     + "Did you forget to add the @UseCaseMethod annotation?");
+        } else if (methodsFiltered.size() == 1) {
+            return methodsFiltered.get(0);
         }
 
         methodsFiltered = getMethodMatchingName(useCaseName, methodsFiltered);
         if (methodsFiltered.isEmpty()) {
             throw new IllegalArgumentException("The target doesn't contain any use case with this name."
                     + "Did you forget to add the @UseCaseMethod annotation?");
+        } else if (methodsFiltered.size() == 1) {
+            return methodsFiltered.get(0);
         }
 
         methodsFiltered = getMethodMatchingArguments(args, methodsFiltered);
@@ -84,6 +88,9 @@ final class UseCaseFilter {
 
     private static List<Method> getMethodMatchingArguments(Object[] selectedArgs,
                                                            List<Method> methodsFiltered) {
+        if (selectedArgs == null || selectedArgs.length < 1) {
+            return methodsFiltered;
+        }
 
         Iterator<Method> iteratorMethods = methodsFiltered.iterator();
 

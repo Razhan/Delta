@@ -1,7 +1,9 @@
 package com.deltastudio.ran.deltalibrary.presentation;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.support.v7.widget.ContentFrameLayout;
 
 import com.deltastudio.ran.deltalibrary.view.MvpView;
 
@@ -10,6 +12,11 @@ import java.lang.ref.WeakReference;
 public abstract class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     private WeakReference<V> viewRef;
+    protected Context mContext;
+
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
+    }
 
     @UiThread
     @Override
@@ -31,6 +38,8 @@ public abstract class MvpBasePresenter<V extends MvpView> implements MvpPresente
     @UiThread
     @Override
     public void detachView(boolean retainInstance) {
+        mContext = null;
+
         if (viewRef != null) {
             viewRef.clear();
             viewRef = null;

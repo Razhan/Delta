@@ -12,10 +12,10 @@ import rx.Observable;
 
 public interface RestfulService {
 
-    String ENDPOINT = "http://api.guancha.cn/Appdata/";
+    String ENDPOINT = "http://api.guancha.cn/";
 
-    @GET("NewsList/?newstype=1&isline=0&size=20&page=1&type=1&id=homepage")
-    Observable<List<News>> getNews();
+    @GET("Appdata/NewsList/?newstype=1&isline=0&size=20&page=1&type=1&id=homepage")
+    Observable<News> getNews();
 
     class Creator {
 

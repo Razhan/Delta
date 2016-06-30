@@ -25,6 +25,10 @@ public abstract class UseCase {
 
     public UseCase() {
         compositeSubscription = new CompositeSubscription();
+
+        onSuccessCallback = obj -> {};
+        onErrorCallback = obj -> {};
+        onCompleteCallback = () -> {};
     }
 
     public UseCase useCaseName(String name) {
