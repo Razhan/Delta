@@ -1,8 +1,10 @@
 package com.deltastudio.ran.delta.injector.components;
 
 import com.deltastudio.ran.delta.MainActivity;
+//import com.deltastudio.ran.delta.ReposFragment;
 import com.deltastudio.ran.delta.injector.PerActivity;
 import com.deltastudio.ran.delta.injector.modules.NewsModule;
+import com.deltastudio.ran.delta.presenter.MainPresenter;
 
 import dagger.Component;
 
@@ -14,4 +16,9 @@ import dagger.Component;
 public interface NewsComponent {
 
     void inject(MainActivity activity);
+
+    MainPresenter presenter();
+
+
+
 }

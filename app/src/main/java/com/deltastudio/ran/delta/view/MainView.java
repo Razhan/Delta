@@ -8,6 +8,6 @@ import java.util.List;
 /**
  * Created by ranzh on 6/30/2016.
  */
-public interface MainView extends MvpLceView<List<News>> {
+public interface MainView extends MvpLceView<News> {
 
 }

@@ -15,26 +15,34 @@ import javax.inject.Named;
  */
 public class MainPresenter extends MvpBasePresenter<MainView> {
 
-    private final UseCase getNews;
+    private final UseCase<News> newsUseCase;
 
     @Inject
-    public MainPresenter(@Named("NewsList") UseCase getUserAccountUseCase, Context context) {
-        this.getNews = getUserAccountUseCase;
+    public MainPresenter(@Named("NewsList") UseCase<News> newsUseCase, Context context) {
+        this.newsUseCase = newsUseCase;
         this.mContext = context;
     }
 
-    public void getNews() {
-        getNews.builder()
-            .useCaseFunction("getNews")
-            .onSuccess(news -> {
-                ((News)news).getCount();})
-            .onError(e -> {
-                ((Throwable) e).printStackTrace();})
-            .build();
+    public void getNews(boolean pullToRefresh) {
+//        getView().showLoading(pullToRefresh);
+
+        newsUseCase.builder()
+                    .useCaseFunction("getNews")
+                    .onSuccess(news -> {
+//                        if (isViewAttached()) {
+//                            getView().setData(news);
+//                            getView().showContent();
+//                        }
+                        news.getCount();
+                    })
+                    .onError(e -> {
+                        e.printStackTrace();
+                    })
+                    .build();
     }
 
     @Override
     protected void unsubscribe() {
-        getNews.unsubscribe();
+        newsUseCase.unsubscribe();
     }
 }

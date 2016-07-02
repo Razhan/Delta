@@ -21,8 +21,11 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initDependencyInjector();
         getMvpDelegate().onCreate(savedInstanceState);
     }
+
+    protected abstract void initDependencyInjector();
 
     @Override
     protected void onDestroy() {
@@ -146,7 +149,4 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
         return super.getLastCustomNonConfigurationInstance();
     }
 
-    public String getErrorMessage(Exception error) {
-        return errorMessageFactory.create(this, error);
-    }
 }
