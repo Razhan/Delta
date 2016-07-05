@@ -25,9 +25,5 @@ public class NewsModule {
         return newsListUseCase;
     }
 
-    @Provides @PerActivity
-    public ErrorMessageDeterminer providesErrorMessageDeterminer(){
-        return new ErrorMessageDeterminer();
-    }
 
 }

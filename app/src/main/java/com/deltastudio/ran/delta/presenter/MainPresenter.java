@@ -24,19 +24,22 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
     }
 
     public void getNews(boolean pullToRefresh) {
-//        getView().showLoading(pullToRefresh);
+        if (isViewAttached()) {
+            getView().showLoading(pullToRefresh);
+        }
 
         newsUseCase.builder()
                     .useCaseFunction("getNews")
                     .onSuccess(news -> {
-//                        if (isViewAttached()) {
-//                            getView().setData(news);
-//                            getView().showContent();
-//                        }
-                        news.getCount();
+                        if (isViewAttached()) {
+                            getView().setData(news);
+                            getView().showContent();
+                        }
                     })
                     .onError(e -> {
-                        e.printStackTrace();
+                        if (isViewAttached()) {
+                            getView().showError(e, pullToRefresh);
+                        }
                     })
                     .build();
     }

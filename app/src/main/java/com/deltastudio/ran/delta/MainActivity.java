@@ -14,19 +14,18 @@ import com.deltastudio.ran.delta.injector.components.NewsComponent;
 import com.deltastudio.ran.delta.presenter.MainPresenter;
 import com.deltastudio.ran.delta.view.MainView;
 import com.deltastudio.ran.deltalibrary.presentation.ice.MvpLceActivity;
+import com.deltastudio.ran.deltalibrary.presentation.ice.MvpLceActivityWithRefresh;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends MvpLceActivity<SwipeRefreshLayout, News, MainView, MainPresenter>
-        implements MainView, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends MvpLceActivityWithRefresh< News, MainView, MainPresenter>
+        implements MainView {
 
     private NewsComponent newsComponent;
     private NewsAdapter adapter;
-    @Inject
-    ErrorMessageDeterminer errorMessageDeterminer;
 
     @BindView(R.id.recyclerView)    RecyclerView recyclerView;
 
@@ -72,18 +71,5 @@ public class MainActivity extends MvpLceActivity<SwipeRefreshLayout, News, MainV
         presenter.getNews(pullToRefresh);
     }
 
-    @Override
-    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
-        return errorMessageDeterminer.getErrorMessage(e, pullToRefresh);
-    }
 
-    @Override public void showError(Throwable e, boolean pullToRefresh) {
-        super.showError(e, pullToRefresh);
-        contentView.setRefreshing(false);
-    }
-
-    @Override
-    public void onRefresh() {
-        loadData(true);
-    }
 }

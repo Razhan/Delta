@@ -3,7 +3,6 @@ package com.deltastudio.ran.deltalibrary.presentation.ice;
 import android.support.annotation.CallSuper;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.deltastudio.ran.deltalibrary.R;
 import com.deltastudio.ran.deltalibrary.presentation.MvpActivity;
@@ -75,19 +74,13 @@ public abstract class MvpLceActivity<CV extends View, M, V extends MvpLceView<M>
         LceAnimator.showContent(loadingView, contentView, errorView);
     }
 
-    protected abstract String getErrorMessage(Throwable e, boolean pullToRefresh);
-
-    protected void showLightError(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void showError(Throwable e, boolean pullToRefresh) {
 
-        String errorMsg = getErrorMessage(e, pullToRefresh);
+        String errorMsg = getErrorMessage(e);
 
         if (pullToRefresh) {
-            showLightError(errorMsg);
+            showMessage(errorMsg);
         } else {
             errorView.setText(errorMsg);
             animateErrorViewIn();

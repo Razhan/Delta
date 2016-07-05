@@ -3,6 +3,7 @@ package com.deltastudio.ran.deltalibrary.presentation;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.deltastudio.ran.deltalibrary.domain.exception.ErrorMessageFactory;
 import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegate;
@@ -10,13 +11,16 @@ import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegat
 import com.deltastudio.ran.deltalibrary.presentation.delegate.ActivityMvpDelegateImpl;
 import com.deltastudio.ran.deltalibrary.view.MvpView;
 
+import javax.inject.Inject;
+
 public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
         extends AppCompatActivity implements ActivityMvpDelegateCallback<V, P>, MvpView {
 
     protected ActivityMvpDelegate mvpDelegate;
     protected P presenter;
     protected boolean retainInstance;
-    protected ErrorMessageFactory errorMessageFactory;
+    @Inject
+    ErrorMessageFactory errorMessageFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,16 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     @Override
     public V getMvpView() {
         return (V) this;
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public String getErrorMessage(Throwable e) {
+        return errorMessageFactory.getErrorMessage(e);
     }
 
     @Override

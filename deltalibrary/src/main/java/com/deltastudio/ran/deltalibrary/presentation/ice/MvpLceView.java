@@ -9,7 +9,6 @@ public interface MvpLceView<M> extends MvpView {
     @UiThread
     void showLoading(boolean pullToRefresh);
 
-
     @UiThread
     void showContent();
 
