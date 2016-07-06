@@ -31,6 +31,8 @@ public class DeltaFragmentManager {
         if (savedInstanceState != null) {
             mCurrentPosition = savedInstanceState.getInt(EXTRA_CURRENT_POSITION, mDefaultPosition);
         }
+
+        showFragment(getCurrentPosition());
     }
 
     public void onSaveInstanceState(Bundle outState) {

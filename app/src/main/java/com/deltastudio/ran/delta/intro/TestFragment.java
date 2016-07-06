@@ -2,6 +2,7 @@ package com.deltastudio.ran.delta.intro;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ public class TestFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
+        Log.d("onCreate", "onCreate");
+
     }
 
     @Override
@@ -56,6 +59,8 @@ public class TestFragment extends Fragment {
     public void onStart() {
         super.onStart();
         textview.setText(mParam1);
+        Log.d("onStart", "onStart");
+
     }
 
 
