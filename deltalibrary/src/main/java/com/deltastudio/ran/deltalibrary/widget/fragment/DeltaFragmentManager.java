@@ -1,4 +1,4 @@
-package com.deltastudio.ran.deltalibrary.utils.deltafragmentmanager;
+package com.deltastudio.ran.deltalibrary.widget.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;

@@ -3,8 +3,9 @@ package com.deltastudio.ran.delta;
 import android.content.Context;
 
 import com.deltastudio.ran.delta.data.model.News;
-import com.deltastudio.ran.deltalibrary.utils.recycleview.BaseRecyclerAdapter;
-import com.deltastudio.ran.deltalibrary.utils.recycleview.RecyclerViewHolder;
+import com.deltastudio.ran.deltalibrary.widget.recycleview.BaseRecyclerAdapter;
+import com.deltastudio.ran.deltalibrary.widget.recycleview.RecyclerViewHolder;
+
 
 import java.util.List;
 

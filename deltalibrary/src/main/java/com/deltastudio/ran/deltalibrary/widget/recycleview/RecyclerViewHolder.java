@@ -1,4 +1,4 @@
-package com.deltastudio.ran.deltalibrary.utils.recycleview;
+package com.deltastudio.ran.deltalibrary.widget.recycleview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.deltastudio.ran.deltalibrary.R;
 
 /**
  * Created by ran on 4/14/16.

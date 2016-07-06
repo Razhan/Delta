@@ -3,4 +3,7 @@
     <item name="contentView" type="id"/>
     <item name="errorView" type="id"/>
     <item name="loadingView" type="id"/>
+
+    <item type="id" name="viewpager"/>
+    <item type="id" name="indicator"/>
 </resources>

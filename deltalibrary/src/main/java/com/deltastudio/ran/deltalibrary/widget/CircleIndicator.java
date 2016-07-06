@@ -1,4 +1,4 @@
-package com.deltastudio.ran.deltalibrary.utils;
+package com.deltastudio.ran.deltalibrary.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;

@@ -1,14 +1,8 @@
-package com.deltastudio.ran.deltalibrary.utils.recycleview;
+package com.deltastudio.ran.deltalibrary.widget.recycleview;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
